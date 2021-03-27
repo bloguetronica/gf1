@@ -8,6 +8,7 @@ rm -f /usr/local/share/man/man1/gf1-amp.1.gz
 rm -f /usr/local/share/man/man1/gf1-amp50.1.gz
 rm -f /usr/local/share/man/man1/gf1-clear.1.gz
 rm -f /usr/local/share/man/man1/gf1-freq.1.gz
+rm -f /usr/local/share/man/man1/gf1-list.1.gz
 rm -f /usr/local/share/man/man1/gf1-lockotp.1.gz
 rm -f /usr/local/share/man/man1/gf1-reset.1.gz
 rm -f /usr/local/share/man/man1/gf1-sine.1.gz
