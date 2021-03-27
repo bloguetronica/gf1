@@ -1,4 +1,4 @@
-/* GF1 Tri Command - Version 1.0 for Debian Linux
+/* GF1 Tri Command - Version 1.1 for Debian Linux
    Copyright (c) 2017 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <libusb-1.0/libusb.h>
 
 // Defines
@@ -77,6 +78,7 @@ int main(void)
                 disable_spi_delays(devhandle, 0);  // Disable all SPI delays for channel 0
                 select_cs(devhandle, 0);  // Enable the chip select corresponding to channel 0, and disable any others
                 set_triangle_wave(devhandle);  // Set the waveform to triangular (by sending a specific sequence of bytes to the AD5932 waveform generator on channel 0)
+                usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (bug fix)
                 disable_cs(devhandle, 0);  // Disable the previously enabled chip select
                 set_gpio2(devhandle, true);  // Set GPIO.2 to a logical high
                 set_gpio2(devhandle, false);  // and then to a logical low
@@ -182,12 +184,12 @@ void set_triangle_wave(libusb_device_handle *devhandle)  // Configures the contr
         0x01,                    // Write command
         0x00,                    // Reserved
         0x02, 0x00, 0x00, 0x00,  // Two bytes to write
-        0x0D, 0xD3               // Triangular waveform, automatic increments, MSBOUT pin enabled, SYNCOUT pin disabled, B24 = 1, SYNCSEL = 0
+        0x0D, 0xDF               // Triangular waveform, automatic increments, MSBOUT pin enabled, SYNCOUT pin enabled, B24 = 1, SYNCSEL = 1
     };
     int bytes_written;
     if (libusb_bulk_transfer(devhandle, 0x01, write_command_buf, sizeof(write_command_buf), &bytes_written, TR_TIMEOUT) != 0)
     {
-        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint address 0x01.\n");
+        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint 1 (address 0x01).\n");
         err_level = EXIT_FAILURE;
     }
 }

@@ -19,10 +19,10 @@
 
 
 CC = gcc
-CFLAGS = -O2 -std=c99 -Wall -pedantic
+CFLAGS = -O2 -std=gnu99 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
-TARGETS = gf1-amp gf1-clear gf1-freq gf1-lockotp gf1-reset gf1-sine gf1-start gf1-stop gf1-tri
+TARGETS = gf1-amp gf1-amp50 gf1-clear gf1-freq gf1-lockotp gf1-reset gf1-sine gf1-start gf1-stop gf1-tri
 
 .PHONY: all clean install uninstall
 

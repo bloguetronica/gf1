@@ -1,6 +1,7 @@
 This directory contains all source code files required for compiling the
 commands for GF1 Function Generator. A list of relevant files follows:
 – gf1-amp.c;
+– gf1-amp50.c;
 – gf1-clear.c;
 – gf1-freq.c;
 – gf1-lockotp.c;
