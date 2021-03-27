@@ -1,15 +1,22 @@
 This directory contains all source code files required for compiling the
 commands for GF1 Function Generator. A list of relevant files follows:
+– common.c;
+– common.h;
 – gf1-amp.c;
 – gf1-amp50.c;
 – gf1-clear.c;
+– gf1-core.c;
+– gf1-core.h;
 – gf1-freq.c;
+– gf1-list.c;
 – gf1-lockotp.c;
 – gf1-reset.c;
 – gf1-sine.c;
 – gf1-start.c;
 – gf1-stop.c;
 – gf1-tri.c;
+– libusb-extra.c;
+– libusb-extra.h;
 – Makefile.
 
 In order to compile successfully all commands, you must have the packages

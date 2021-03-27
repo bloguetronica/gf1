@@ -1,5 +1,5 @@
 # Makefile for all GF1 commands, Debian Linux (GCC)
-# Copyright (c) 2017 Samuel Lourenço
+# Copyright (c) 2017-2018 Samuel Lourenço
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -22,14 +22,15 @@ CC = gcc
 CFLAGS = -O2 -std=gnu99 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
-TARGETS = gf1-amp gf1-amp50 gf1-clear gf1-freq gf1-lockotp gf1-reset gf1-sine gf1-start gf1-stop gf1-tri
+OBJECTS = common.o gf1-core.o libusb-extra.o
+TARGETS = gf1-amp gf1-amp50 gf1-clear gf1-freq gf1-list gf1-lockotp gf1-reset gf1-sine gf1-start gf1-stop gf1-tri
 
 .PHONY: all clean install uninstall
 
 all: $(TARGETS)
 
-$(TARGETS): % : %.o
-	$(CC) $(LDFLAGS) $< $(LDLIBS) -o $@
+$(TARGETS): % : %.o $(OBJECTS)
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
