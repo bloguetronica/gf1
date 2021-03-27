@@ -1,4 +1,4 @@
-/* GF1 Freq Command - Version 1.0 for Debian Linux
+/* GF1 Freq Command - Version 1.1 for Debian Linux
    Copyright (c) 2017 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify
@@ -23,6 +23,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
+#include <unistd.h>
 #include <libusb-1.0/libusb.h>
 
 // Defines
@@ -103,6 +104,7 @@ int main(int argc, char **argv)
                     disable_spi_delays(devhandle, 0);  // Disable all SPI delays for channel 0
                     select_cs(devhandle, 0);  // Enable the chip select corresponding to channel 0, and disable any others
                     set_frequency(devhandle, freq_code);  // Set the frequency to the intended value (by sending a sequence of bytes to the AD5932 waveform generator on channel 0)
+                    usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (bug fix)
                     disable_cs(devhandle, 0);  // Disable the previously enabled chip select
                     set_gpio2(devhandle, true);  // Set GPIO.2 to a logical high
                     set_gpio2(devhandle, false);  // and then to a logical low
@@ -218,7 +220,7 @@ void set_frequency(libusb_device_handle *devhandle, unsigned int value)  // Sets
     int bytes_written;
     if (libusb_bulk_transfer(devhandle, 0x01, write_command_buf, sizeof(write_command_buf), &bytes_written, TR_TIMEOUT) != 0)
     {
-        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint address 0x01.\n");
+        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint 1 (address 0x01).\n");
         err_level = EXIT_FAILURE;
     }
 }

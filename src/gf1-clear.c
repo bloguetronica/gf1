@@ -1,4 +1,4 @@
-/* GF1 Clear Command - Version 1.0 for Debian Linux
+/* GF1 Clear Command - Version 1.1 for Debian Linux
    Copyright (c) 2017 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify
@@ -22,6 +22,7 @@
 #include <stdbool.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <unistd.h>
 #include <libusb-1.0/libusb.h>
 
 // Defines
@@ -80,8 +81,10 @@ int main(void)
                 disable_spi_delays(devhandle, 1);  // Disable all SPI delays for channel 1
                 select_cs(devhandle, 0);  // Enable the chip select corresponding to channel 0, and disable any others
                 clear_waveform(devhandle);  // Clear all waveform generation parameters (by sending a specific sequence of bytes to the AD5932 waveform generator on channel 0)
+                usleep(100);  // Wait 100us, in order to prevent possible errors while switching the chip select (bug fix)
                 select_cs(devhandle, 1);  // Enable the chip select corresponding to channel 1, and again disable the rest (including the one corresponding to the previously enabled channel)
                 reset_amplitude(devhandle);  // Set the amplitude to its default value (by sending a byte with value 0x80 to the AD5160BRJZ5 SPI potentiometer on channel 1)
+                usleep(100);  // Again, wait 100us, in order to prevent possible errors while disabling the previouly enabled chip select (bug fix)
                 disable_cs(devhandle, 1);  // Disable the chip select corresponding to channel 1, which is the only one that is active to this point
                 if (err_level == 0)  // If all goes well
                     printf("All settings cleared.\n");
@@ -104,7 +107,7 @@ void clear_waveform(libusb_device_handle *devhandle)  // Clears all time and fre
         0x01,                    // Write command
         0x00,                    // Reserved
         0x0E, 0x00, 0x00, 0x00,  // Fourteen bytes to write
-        0x0F, 0xD3,              // Sinusoidal waveform, automatic increments, MSBOUT pin enabled, SYNCOUT pin disabled, B24 = 1, SYNCSEL = 0
+        0x0F, 0xDF,              // Sinusoidal waveform, automatic increments, MSBOUT pin enabled, SYNCOUT pin enabled, B24 = 1, SYNCSEL = 1
         0x10, 0x00,              // Zero frequency increments
         0x20, 0x00, 0x30, 0x00,  // Delta frequency set to zero
         0x40, 0x00,              // Increment interval set to zero
@@ -113,7 +116,7 @@ void clear_waveform(libusb_device_handle *devhandle)  // Clears all time and fre
     int bytes_written;
     if (libusb_bulk_transfer(devhandle, 0x01, write_command_buf, sizeof(write_command_buf), &bytes_written, TR_TIMEOUT) != 0)
     {
-        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint address 0x01.\n");
+        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint 1 (address 0x01).\n");
         err_level = EXIT_FAILURE;
     }
 }
@@ -172,7 +175,7 @@ void reset_amplitude(libusb_device_handle *devhandle)  // Sets the register on t
     int bytes_written;
     if (libusb_bulk_transfer(devhandle, 0x01, write_command_buf, sizeof(write_command_buf), &bytes_written, TR_TIMEOUT) != 0)
     {
-        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint address 0x01.\n");
+        fprintf(stderr, "Error: Failed bulk OUT transfer to endpoint 1 (address 0x01).\n");
         err_level = EXIT_FAILURE;
     }
 }

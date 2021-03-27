@@ -1,4 +1,4 @@
-/* GF1 Amp Command - Version 1.1 for Debian Linux
+/* GF1 Amp50 Command - Version 1.0 for Debian Linux
    Copyright (c) 2017 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify
@@ -50,7 +50,7 @@ int main(int argc, char **argv)
     unsigned char amp_code;
     if (argc < 2)  // If the program was called without arguments
     {
-        fprintf(stderr, "Error: Missing argument.\nUsage: gf1-amp AMPLITUDE(Vpp)\n");
+        fprintf(stderr, "Error: Missing argument.\nUsage: gf1-amp50 AMPLITUDE(Vpp)\n");
         err_level = EXIT_USERERR;
     }
     else if (!isnumber(argv[1]))  // If the argument string doesn't constitute a valid number
@@ -61,9 +61,9 @@ int main(int argc, char **argv)
     else
     {
         amplitude = atof(argv[1]);  // Convert the argument string into a floating point number
-        if (amplitude < 0 || amplitude > 5)  // If the obtained amplitude value (in Vpp) after conversion is lesser than 0 or greater than 5
+        if (amplitude < 0 || amplitude > 2.5)  // If the obtained amplitude value (in Vpp) after conversion is lesser than 0 or greater than 2.5
         {
-            fprintf(stderr, "Error: Amplitude should be between 0 and 5Vpp.\n");
+            fprintf(stderr, "Error: Amplitude should be between 0 and 2.5Vpp.\n");
             err_level = EXIT_USERERR;
         }
         else if (libusb_init(&context) != 0)  // Initialize libusb. In case of failure
@@ -93,15 +93,15 @@ int main(int argc, char **argv)
                 }
                 else  // If the interface is successfully claimed
                 {
-                    amp_code = (unsigned char)(amplitude * 255 / 5 + 0.5);
+                    amp_code = (unsigned char)(amplitude * 255 / 2.5 + 0.5);
                     configure_spi_mode(devhandle, 1, false, false);  // Clock polarity regarding channel 1 is active high (CPOL = 0) and data is valid on each rising edge (CPHA = 0)
                     disable_spi_delays(devhandle, 1);  // Disable all SPI delays for channel 1
                     select_cs(devhandle, 1);  // Enable the chip select corresponding to channel 1, and disable any others
                     set_amplitude(devhandle, amp_code);  // Set the amplitude to the intended value (by sending a byte containing said value to the AD5160BRJZ5 SPI potentiometer on channel 1)
-                    usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (bug fix)
+                    usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select
                     disable_cs(devhandle, 1);  // Disable the previously enabled chip select
                     if (err_level == 0)  // If all goes well
-                        printf("Amplitude set to %.2fVpp.\n", amp_code * 5.0 / 255);
+                        printf("Amplitude set to %.2fVpp (%.2fVpp unterminated).\n", amp_code * 2.5 / 255, amp_code * 5.0 / 255);
                     libusb_release_interface(devhandle, 0);  // Release the interface
                 }
                 if (kernel_attached)  // If a kernel driver was attached to the interface before

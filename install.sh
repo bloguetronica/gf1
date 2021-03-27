@@ -7,6 +7,7 @@ apt-get -qq install libusb-1.0-0-dev
 echo Copying source code files...
 mkdir -p /usr/local/src/gf1
 cp -f src/gf1-amp.c /usr/local/src/gf1/.
+cp -f src/gf1-amp50.c /usr/local/src/gf1/.
 cp -f src/gf1-clear.c /usr/local/src/gf1/.
 cp -f src/gf1-freq.c /usr/local/src/gf1/.
 cp -f src/gf1-lockotp.c /usr/local/src/gf1/.
@@ -22,6 +23,7 @@ make -C /usr/local/src/gf1 all install clean
 echo Installing man pages...
 mkdir -p /usr/local/share/man/man1
 cp -f man/gf1-amp.1.gz /usr/local/share/man/man1/.
+cp -f man/gf1-amp50.1.gz /usr/local/share/man/man1/.
 cp -f man/gf1-clear.1.gz /usr/local/share/man/man1/.
 cp -f man/gf1-freq.1.gz /usr/local/share/man/man1/.
 cp -f man/gf1-lockotp.1.gz /usr/local/share/man/man1/.
