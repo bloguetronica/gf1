@@ -1,5 +1,5 @@
-/* GF1 Freq Command - Version 2.0 for Debian Linux
-   Copyright (c) 2017-2018 Samuel Lourenço
+/* GF1 Freq Command - Version 2.1 for Debian Linux
+   Copyright (c) 2017-2019 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -87,13 +87,13 @@ int main(int argc, char **argv)
                     }
                     else  // If the interface is successfully claimed
                     {
-                        unsigned int freq_code = (unsigned int)(frequency * 8388608 / 25000 + 0.5);
                         configure_spi_mode(devhandle, 0, CPOL1, CPHA0);  // Clock polarity regarding channel 0 is active low (CPOL = 1) and data is valid on each falling edge (CPHA = 0)
                         disable_spi_delays(devhandle, 0);  // Disable all SPI delays for channel 0
                         set_gpio2(devhandle, false);  // Make sure that both GPIO.2
                         set_gpio3(devhandle, false);  // and GPIO.3 are set to to a logical low first
                         set_gpio3(devhandle, true);  // Then set GPIO.3 to a logical high
                         set_gpio3(devhandle, false);  // and again to a logical low (this toggle is not really necessary, unless the frequency increments are set to be externally triggered via GPIO.2/CTRL)
+                        uint32_t freq_code = (uint32_t)(frequency * 8388608 / 25000 + 0.5);
                         select_cs(devhandle, 0);  // Enable the chip select corresponding to channel 0, and disable any others
                         set_frequency(devhandle, freq_code);  // Set the frequency to the intended value (by sending a sequence of bytes to the AD5932 waveform generator on channel 0)
                         usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (workaround)

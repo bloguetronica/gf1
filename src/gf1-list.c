@@ -1,5 +1,5 @@
-/* GF1 List Command - Version 1.0 for Debian Linux
-   Copyright (c) 2018 Samuel Lourenço
+/* GF1 List Command - Version 1.1 for Debian Linux
+   Copyright (c) 2018-2019 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -26,8 +26,8 @@
 
 int main(void)
 {
-    libusb_context *context;
     int err_level = EXIT_SUCCESS;
+    libusb_context *context;
     if (libusb_init(&context) != 0)  // Initialize libusb. In case of failure
     {
         fprintf(stderr, "Error: Could not initialize libusb.\n");
@@ -44,15 +44,15 @@ int main(void)
         }
         else
         {
-            int counter = 0;
-            for (ssize_t i = 0; i < devlist; i++)  // Run through all listed devices
+            size_t counter = 0;
+            for (ssize_t i = 0; i < devlist; ++i)  // Run through all listed devices
             {
                 struct libusb_device_descriptor desc;
                 if (libusb_get_device_descriptor(devs[i], &desc) == 0 && desc.idVendor == 0x10C4 && desc.idProduct == 0x8A7D)  // If the device descriptor is retrieved, and both VID and PID correspond to the GF1 Function Generator
                 {
                     libusb_device_handle *devhandle;
-                    counter++;  // Increment the counter, since a suitable device was found
-                    printf("%d\t", counter);  // Print the item number
+                    ++counter;  // Increment the counter, since a suitable device was found
+                    printf("%zu\t", counter);  // Print the item number
                     if (libusb_open(devs[i], &devhandle) == 0)  // Open the listed device. If successfull
                     {
                         unsigned char str_desc[256];
