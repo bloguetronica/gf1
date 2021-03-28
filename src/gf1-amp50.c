@@ -1,5 +1,5 @@
-/* GF1 Amp50 Command - Version 2.0 for Debian Linux
-   Copyright (c) 2017-2018 Samuel Lourenço
+/* GF1 Amp50 Command - Version 2.1 for Debian Linux
+   Copyright (c) 2017-2019 Samuel Lourenço
 
    This program is free software: you can redistribute it and/or modify it
    under the terms of the GNU General Public License as published by the Free
@@ -87,9 +87,9 @@ int main(int argc, char **argv)
                     }
                     else  // If the interface is successfully claimed
                     {
-                        unsigned char amp_code = (unsigned char)(amplitude * 255 / 2.5 + 0.5);
                         configure_spi_mode(devhandle, 1, CPOL0, CPHA0);  // Clock polarity regarding channel 1 is active high (CPOL = 0) and data is valid on each rising edge (CPHA = 0)
                         disable_spi_delays(devhandle, 1);  // Disable all SPI delays for channel 1
+                        uint8_t amp_code = (uint8_t)(amplitude * 255 / 2.5 + 0.5);
                         select_cs(devhandle, 1);  // Enable the chip select corresponding to channel 1, and disable any others
                         set_amplitude(devhandle, amp_code);  // Set the amplitude to the intended value (by sending a byte containing said value to the AD5160BRJZ5 SPI potentiometer on channel 1)
                         usleep(100);  // Wait 100us, in order to prevent possible errors while disabling the chip select (workaround)

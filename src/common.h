@@ -1,5 +1,5 @@
-/* Common functions - Version 1.0
-   Copyright (c) 2018 Samuel Lourenço
+/* Common functions - Version 1.2
+   Copyright (c) 2018-2019 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -20,6 +20,9 @@
 
 #ifndef COMMON_H_
 #define COMMON_H_
+
+// Includes
+#include <stdbool.h>
 
 // Function prototypes
 bool isnumber(char *value);

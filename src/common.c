@@ -1,5 +1,5 @@
-/* Common functions - Version 1.0
-   Copyright (c) 2018 Samuel Lourenço
+/* Common functions - Version 1.2
+   Copyright (c) 2018-2019 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -19,8 +19,8 @@
 
 
 // Includes
-#include <stdbool.h>
-#include <string.h>
+#include <stddef.h>
+#include "common.h"
 
 bool isnumber(char *value)  // Checks if a given string constitutes a valid number
 {
@@ -32,7 +32,7 @@ bool isnumber(char *value)  // Checks if a given string constitutes a valid numb
         bool dp_exists = false;
         if (value[0] == '.')  // If character is a decimal point
             dp_exists = true;
-        for (size_t i = 1; i < strlen(value); i++)
+        for (size_t i = 1; value[i] != '\0'; ++i)
         {
             if ((value[i] != '.' || dp_exists) && (value[i] < '0' || value[i] > '9'))  // Number is not valid if subsequent characters are not digits or if there is more than one decimal point
             {
