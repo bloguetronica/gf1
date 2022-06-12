@@ -20,20 +20,25 @@
 
 CC = gcc
 CFLAGS = -O2 -std=gnu99 -Wall -pedantic
+CXX = g++
+CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
-OBJECTS = common.o gf1-core.o libusb-extra.o
-TARGETS = gf1-amp gf1-amp50 gf1-clear gf1-freq gf1-list gf1-lockotp gf1-reset gf1-sine gf1-start gf1-stop gf1-tri
+OBJECTS = cp2130.o error.o gf1device.o libusb-extra.o utils.o
+TARGETS = gf1-list
 
 .PHONY: all clean install uninstall
 
 all: $(TARGETS)
 
 $(TARGETS): % : %.o $(OBJECTS)
-	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CXX) $(LDFLAGS) $^ $(LDLIBS) -o $@
 
 %.o: %.c
 	$(CC) $(CFLAGS) -c $<
+
+%.o: %.cpp
+	$(CXX) $(CXXFLAGS) -c $<
 
 clean:
 	$(RM) *.o $(TARGETS)
