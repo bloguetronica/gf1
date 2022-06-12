@@ -1,5 +1,5 @@
 # Makefile for all GF1 commands, Debian Linux (GCC)
-# Copyright (c) 2017-2018 Samuel Lourenço
+# Copyright (c) 2017-2022 Samuel Lourenço
 
 # This program is free software: you can redistribute it and/or modify
 # it under the terms of the GNU General Public License as published by
@@ -25,7 +25,7 @@ CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
 OBJECTS = cp2130.o error.o gf1device.o libusb-extra.o utils.o
-TARGETS = gf1-list
+TARGETS = gf1-info gf1-list
 
 .PHONY: all clean install uninstall
 
