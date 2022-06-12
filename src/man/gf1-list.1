@@ -1,0 +1,19 @@
+.TH GF1-LIST 1
+.SH NAME
+gf1-list \- list connected GF1 Function Generator devices
+.SH SYNOPSIS
+.B gf1-list
+.SH DESCRIPTION
+.B gf1-list
+lists all function generator devices that are currently connected. Note that
+the first device on the list is always the one addressed by default. Hence,
+when applicable, a command invoked without any serial number specified will
+always take effect on that device.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+gf1-amp(1), gf1-amp50(1), gf1-clear(1), gf1-freq(1), gf1-lockotp(1),
+gf1-reset(1), gf1-sine(1), gf1-start(1), gf1-stop(1), gf1-tri(1)

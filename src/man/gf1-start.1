@@ -1,0 +1,25 @@
+.TH GF1-START 1
+.SH NAME
+gf1-start \- start GF1 Function Generator
+.SH SYNOPSIS
+.B gf1-start
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B gf1-start
+issues a start command to the function generator so that it outputs a signal.
+This command is especially useful after invoking
+.BR gf1-stop ,
+when it is desired to maintain the set waveform and frequency. The commands
+.BR gf1-freq ,
+.B gf1-sine
+and
+.B gf1-tri
+will also start signal generation, but they imply changing the set parameters.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+gf1-amp(1), gf1-amp50(1), gf1-clear(1), gf1-freq(1), gf1-list(1),
+gf1-lockotp(1), gf1-reset(1), gf1-sine(1), gf1-stop(1), gf1-tri(1)

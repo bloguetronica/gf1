@@ -1,0 +1,21 @@
+.TH GF1-RESET 1
+.SH NAME
+gf1-reset \- reset GF1 Function Generator
+.SH SYNOPSIS
+.B gf1-reset
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B gf1-reset
+issues a reset command to the function generator, causing it to power cycle.
+After reset, no signals will be generated. However, most waveform generation
+parameters will be set to unknown values. You should always invoke
+.B gf1-clear
+after issuing a reset and prior to any other commands.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+gf1-amp(1), gf1-amp50(1), gf1-clear(1), gf1-freq(1), gf1-list(1),
+gf1-lockotp(1), gf1-sine(1), gf1-start(1), gf1-stop(1), gf1-tri(1)
