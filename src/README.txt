@@ -4,8 +4,8 @@ commands for GF1 Function Generator. A list of relevant files follows:
 – cp2130.h;
 – error.cpp;
 – error.h;
-– gf1-amp50.cpp;
 – gf1-amp.cpp;
+– gf1-amp50.cpp;
 – gf1-clear.cpp;
 – gf1device.cpp;
 – gf1device.h;
