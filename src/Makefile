@@ -25,7 +25,7 @@ CXXFLAGS = -O2 -std=c++11 -Wall -pedantic
 LDFLAGS = -s
 LDLIBS = -lusb-1.0
 OBJECTS = cp2130.o error.o gf1device.o libusb-extra.o utils.o
-TARGETS = gf1-info gf1-list gf1-reset gf1-start gf1-stop
+TARGETS = gf1-clear gf1-info gf1-list gf1-reset gf1-start gf1-stop
 
 .PHONY: all clean install uninstall
 
