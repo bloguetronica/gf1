@@ -1,0 +1,20 @@
+.TH GF1-CLEAR 1
+.SH NAME
+gf1-clear \- clear GF1 Function Generator settings
+.SH SYNOPSIS
+.B gf1-clear
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B gf1-clear
+clears all waveform generation parameters, so that the function generator is
+set to a known state. Waveform is set to sinusoidal, with frequency set to
+0Hz and amplitude set to 0Vpp. No signals will be generated.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+gf1-amp(1), gf1-amp50(1), gf1-freq(1), gf1-info(1), gf1-list(1),
+gf1-lockotp(1), gf1-reset(1), gf1-sine(1), gf1-start(1), gf1-stop(1),
+gf1-tri(1)

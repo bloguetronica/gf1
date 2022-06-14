@@ -1,0 +1,29 @@
+.TH GF1-AMP50 1
+.SH NAME
+gf1-amp50 \- set GF1 Function Generator amplitude to a given value
+.SH SYNOPSIS
+.B gf1-amp50
+.I AMPLITUDE
+.RI [ SERIALNUMBER ]
+.SH DESCRIPTION
+.B gf1-amp50
+sets the amplitude to the value given in the argument. This value is expressed
+in Vpp (or Volts peak-to-peak) and must be between 0 and 2.5, inclusive.
+Notice that the analog output must be terminated with 50Ω for accuracy. The
+actual amplitude value will be the double of the input value if the output is
+unterminated. In that case, you should use
+.B gf1-amp
+instead.
+.SH EXAMPLE
+.TP
+.B gf1-amp50 1.6
+Set the amplitude to 1.6Vpp.
+.SH "EXIT STATUS"
+Exits with a status of zero in case of success. Returns one should an error
+occur, or two in case of bad input.
+.SH AUTHOR
+Samuel Lourenço (samuel.fmlourenco@gmail.com).
+.SH "SEE ALSO"
+gf1-amp(1), gf1-clear(1), gf1-freq(1), gf1-info(1), gf1-list(1),
+gf1-lockotp(1), gf1-reset(1), gf1-sine(1), gf1-start(1), gf1-stop(1),
+gf1-tri(1)

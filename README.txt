@@ -15,9 +15,10 @@ to do is run "install.sh" by invoking "sudo ./install.sh" on a terminal
 window, after changing your working directory to the current one. This script
 will first obtain and install the required "build-essential" and
 "libusb-1.0-0-dev" packages (if they are not installed yet). Then it will
-compile the binaries and move them to "/usr/local/bin/". It will also copy
-related man pages to "/usr/local/share/man/man1/". Finally, it will create the
-necessary rules for accessing the device.
+compile the binaries and move them to "/usr/local/bin/". Note that the build
+process will also compress the respective man pages and copy them to
+"/usr/local/share/man/man1/". Finally, it will create the necessary rules for
+accessing the device.
 
 The package also includes a test script named "test.sh". This will set up GF1
 so that it generates a 1KHz triangle wave signal with its amplitude set to

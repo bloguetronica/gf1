@@ -1,5 +1,5 @@
-/* Common functions - Version 1.2
-   Copyright (c) 2018-2019 Samuel Lourenço
+/* Error handling functions - Version 1.0.0
+   Copyright (c) 2022 Samuel Lourenço
 
    This library is free software: you can redistribute it and/or modify it
    under the terms of the GNU Lesser General Public License as published by
@@ -18,13 +18,16 @@
    Please feel free to contact me via e-mail: samuel.fmlourenco@gmail.com */
 
 
-#ifndef COMMON_H_
-#define COMMON_H_
-
 // Includes
-#include <stdbool.h>
+#include <iostream>
+#include "error.h"
 
-// Function prototypes
-bool isnumber(char *value);
-
-#endif
+// Prints errors in separated lines (each error should be terminated with a newline character)
+void printErrors(const std::string &errstr)
+{
+    size_t lnend, lnstart = 0;
+    while ((lnend = errstr.find('\n', lnstart)) != std::string::npos) {
+        std::cerr << "Error: " << errstr.substr(lnstart, lnend - lnstart + 1);  // This includes the newline character
+        lnstart = lnend + 1;
+    }
+}
